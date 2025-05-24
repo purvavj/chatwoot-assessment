@@ -41,20 +41,20 @@ $header-height: 3.5rem;
 $woot-logo-padding: $space-large $space-two;
 
 // Colors
-$color-woot: #1f93ff;
+$color-woot: #931fff;
 $color-gray: #6e6f73;
 $color-light-gray: #999a9b;
 
-$color-border: var(--s-75);
-$color-border-light: var(--s-50);
-$color-border-dark: var(--s-100);
+$color-border: var(--v-50);
+$color-border-light: var(--v-100);
+$color-border-dark: var(--v-200);
 
-$color-background: var(--s-50);
+$color-background: var(--v-50);
 $color-background-light: var(--s-25);
 
 $color-white: #fff;
-$color-body: #3c4858;
-$color-heading: #1f2d3d;
+$color-body: #4d3d5d;
+$color-heading: #4d3d5d;
 $color-extra-light-blue: #f5f7f9;
 
 $primary-color: $color-woot;

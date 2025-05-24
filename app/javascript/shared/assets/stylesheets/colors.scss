@@ -85,16 +85,16 @@
   --v-900: #2B0052;
 
   // Common color aliases
-  --color-woot: var(--w-500);
+  --color-woot: var(--v-500);
 
-  --color-heading: #1f2d3d;
-  --color-body: #3c4858;
+  --color-heading: #2f1f3d;
+  --color-body: #4c3c58;
 
-  --color-border: var(--s-75);
-  --color-border-light: var(--s-50);
-  --color-border-dark: var(--s-100);
+  --color-border: var(--v-100);
+  --color-border-light: var(--v-200);
+  --color-border-dark: var(--v-300);
 
-  --color-background: var(--s-50);
+  --color-background: var(--v-50);
   --color-background-light: var(--s-25);
 
   // Social and inboxes brand colors
