@@ -31,9 +31,7 @@ const updateTopic = topicDetails =>
     ...topicDetails,
   });
 
-const i18nKey = computed(
-  () => `AI_AGENT.ASSISTANTS.${props.type.toUpperCase()}`
-);
+const i18nKey = computed(() => `AI_AGENT.TOPICS.${props.type.toUpperCase()}`);
 
 const createTopic = topicDetails =>
   store.dispatch('aiagentTopics/create', topicDetails);
@@ -69,7 +67,7 @@ defineExpose({ dialogRef });
     ref="dialogRef"
     type="edit"
     :title="t(`${i18nKey}.TITLE`)"
-    :description="t('AI_AGENT.ASSISTANTS.FORM_DESCRIPTION')"
+    :description="t('AI_AGENT.TOPICS.FORM_DESCRIPTION')"
     :show-cancel-button="false"
     :show-confirm-button="false"
     overflow-y-auto

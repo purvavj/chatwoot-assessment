@@ -4,7 +4,7 @@ RSpec.describe CopilotThread, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:account) }
-    it { is_expected.to belong_to(:assistant).class_name('AIAgent::Assistant') }
+    it { is_expected.to belong_to(:topic).class_name('AIAgent::Topic') }
     it { is_expected.to have_many(:copilot_messages).dependent(:destroy_async) }
   end
 
@@ -15,8 +15,8 @@ RSpec.describe CopilotThread, type: :model do
   describe '#push_event_data' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant, title: 'Test Thread') }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, topic: topic, title: 'Test Thread') }
 
     it 'returns the correct event data' do
       event_data = copilot_thread.push_event_data
@@ -32,24 +32,24 @@ RSpec.describe CopilotThread, type: :model do
   describe '#previous_history' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, topic: topic) }
 
     context 'when there are messages in the thread' do
       before do
         create(:aiagent_copilot_message, copilot_thread: copilot_thread, message_type: 'user', message: { 'content' => 'User message' })
-        create(:aiagent_copilot_message, copilot_thread: copilot_thread, message_type: 'assistant_thinking', message: { 'content' => 'Thinking...' })
-        create(:aiagent_copilot_message, copilot_thread: copilot_thread, message_type: 'assistant', message: { 'content' => 'Assistant message' })
+        create(:aiagent_copilot_message, copilot_thread: copilot_thread, message_type: 'topic_thinking', message: { 'content' => 'Thinking...' })
+        create(:aiagent_copilot_message, copilot_thread: copilot_thread, message_type: 'topic', message: { 'content' => 'Topic message' })
       end
 
-      it 'returns only user and assistant messages in chronological order' do
+      it 'returns only user and topic messages in chronological order' do
         history = copilot_thread.previous_history
 
         expect(history.length).to eq(2)
         expect(history[0][:role]).to eq('user')
         expect(history[0][:content]).to eq('User message')
-        expect(history[1][:role]).to eq('assistant')
-        expect(history[1][:content]).to eq('Assistant message')
+        expect(history[1][:role]).to eq('topic')
+        expect(history[1][:content]).to eq('Topic message')
       end
     end
 

@@ -64,8 +64,8 @@ export default {
   SET_CHAT_LIST_FILTERS: 'SET_CHAT_LIST_FILTERS',
   UPDATE_CHAT_LIST_FILTERS: 'UPDATE_CHAT_LIST_FILTERS',
 
-  // Conversation inbox connected copilot assistant
-  SET_INBOX_AI_AGENT_ASSISTANT: 'SET_INBOX_AI_AGENT_ASSISTANT',
+  // Conversation inbox connected copilot TOPIC
+  SET_INBOX_AI_AGENT_TOPIC: 'SET_INBOX_AI_AGENT_TOPIC',
 
   // Inboxes
   SET_INBOXES_UI_FLAG: 'SET_INBOXES_UI_FLAG',

@@ -15,8 +15,8 @@ RSpec.describe CopilotMessage, type: :model do
   describe 'callbacks' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, topic: topic) }
 
     describe '#ensure_account' do
       it 'sets the account from the copilot thread before validation' do
@@ -41,8 +41,8 @@ RSpec.describe CopilotMessage, type: :model do
   describe '#push_event_data' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, topic: topic) }
     let(:message_content) { { 'content' => 'Test message' } }
     let(:copilot_message) do
       create(:aiagent_copilot_message,

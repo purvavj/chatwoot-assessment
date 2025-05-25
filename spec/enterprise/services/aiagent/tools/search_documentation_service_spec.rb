@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AIAgent::Tools::SearchDocumentationService do
-  let(:assistant) { create(:aiagent_assistant) }
-  let(:service) { described_class.new(assistant) }
+  let(:topic) { create(:aiagent_topic) }
+  let(:service) { described_class.new(topic) }
   let(:question) { 'How to create a new account?' }
   let(:answer) { 'You can create a new account by clicking on the Sign Up button.' }
   let(:external_link) { 'https://example.com/docs/create-account' }
@@ -39,8 +39,8 @@ RSpec.describe AIAgent::Tools::SearchDocumentationService do
   describe '#execute' do
     let!(:response) do
       create(
-        :aiagent_assistant_response,
-        assistant: assistant,
+        :aiagent_topic_response,
+        topic: topic,
         question: question,
         answer: answer,
         status: 'approved'
@@ -52,7 +52,7 @@ RSpec.describe AIAgent::Tools::SearchDocumentationService do
     context 'when matching responses exist' do
       before do
         response.update(documentable: documentable)
-        allow(AIAgent::AssistantResponse).to receive(:search).with(question).and_return([response])
+        allow(AIAgent::TopicResponse).to receive(:search).with(question).and_return([response])
       end
 
       it 'returns formatted responses for the search query' do
@@ -66,7 +66,7 @@ RSpec.describe AIAgent::Tools::SearchDocumentationService do
 
     context 'when no matching responses exist' do
       before do
-        allow(AIAgent::AssistantResponse).to receive(:search).with(question).and_return([])
+        allow(AIAgent::TopicResponse).to receive(:search).with(question).and_return([])
       end
 
       it 'returns an empty string' do

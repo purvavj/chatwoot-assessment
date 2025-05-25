@@ -77,7 +77,7 @@ const handleAction = ({ action, value }) => {
   <CardLayout>
     <div class="flex justify-between w-full gap-1">
       <router-link
-        :to="{ name: 'aiagent_assistants_edit', params: { assistantId: id } }"
+        :to="{ name: 'aiagent_topics_edit', params: { topicId: id } }"
         class="text-base text-n-slate-12 line-clamp-1 hover:underline transition-colors"
       >
         {{ name }}

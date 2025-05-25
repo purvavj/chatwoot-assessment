@@ -21,7 +21,7 @@ class CopilotMessage < ApplicationRecord
 
   before_validation :ensure_account
 
-  enum message_type: { user: 0, assistant: 1, assistant_thinking: 2 }
+  enum message_type: { user: 0, topic: 1, topic_thinking: 2 }
 
   validates :message_type, presence: true, inclusion: { in: message_types.keys }
   validates :message, presence: true

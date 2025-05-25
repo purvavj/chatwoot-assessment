@@ -49,8 +49,8 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::CopilotThreads', type: :request do
   end
 
   describe 'POST /api/v1/accounts/{account.id}/aiagent/copilot_threads' do
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:valid_params) { { message: 'Hello, how can you help me?', assistant_id: assistant.id } }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:valid_params) { { message: 'Hello, how can you help me?', topic_id: topic.id } }
 
     context 'when it is an un-authenticated user' do
       it 'returns unauthorized' do
@@ -66,7 +66,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::CopilotThreads', type: :request do
       context 'with invalid params' do
         it 'returns error when message is blank' do
           post "/api/v1/accounts/#{account.id}/aiagent/copilot_threads",
-               params: { message: '', assistant_id: assistant.id },
+               params: { message: '', topic_id: topic.id },
                headers: agent.create_new_auth_token,
                as: :json
 
@@ -74,9 +74,9 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::CopilotThreads', type: :request do
           expect(json_response[:error]).to eq('Message is required')
         end
 
-        it 'returns error when assistant_id is invalid' do
+        it 'returns error when topic_id is invalid' do
           post "/api/v1/accounts/#{account.id}/aiagent/copilot_threads",
-               params: { message: 'Hello', assistant_id: 0 },
+               params: { message: 'Hello', topic_id: 0 },
                headers: agent.create_new_auth_token,
                as: :json
 
@@ -99,7 +99,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::CopilotThreads', type: :request do
           thread = CopilotThread.last
           expect(thread.title).to eq(valid_params[:message])
           expect(thread.user_id).to eq(agent.id)
-          expect(thread.assistant_id).to eq(assistant.id)
+          expect(thread.topic_id).to eq(topic.id)
 
           message = thread.copilot_messages.last
           expect(message.message_type).to eq('user')

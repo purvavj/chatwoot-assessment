@@ -4,7 +4,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
   let(:account) { create(:account, custom_attributes: { plan_name: 'startups' }) }
   let(:user) { create(:user, account: account) }
   let(:inbox) { create(:inbox, account: account) }
-  let(:assistant) { create(:aiagent_assistant, account: account) }
+  let(:topic) { create(:aiagent_topic, account: account) }
   let(:contact) { create(:contact, account: account) }
   let(:conversation) { create(:conversation, account: account, inbox: inbox, contact: contact) }
   let(:mock_openai_client) { instance_double(OpenAI::Client) }
@@ -30,9 +30,9 @@ RSpec.describe AIAgent::Copilot::ChatService do
 
   describe '#initialize' do
     it 'sets up the service with correct instance variables' do
-      service = described_class.new(assistant, config)
+      service = described_class.new(topic, config)
 
-      expect(service.assistant).to eq(assistant)
+      expect(service.topic).to eq(topic)
       expect(service.account).to eq(account)
       expect(service.user).to eq(user)
       expect(service.copilot_thread).to eq(copilot_thread)
@@ -40,7 +40,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
     end
 
     it 'builds messages with system message and account context' do
-      service = described_class.new(assistant, config)
+      service = described_class.new(topic, config)
       messages = service.messages
 
       expect(messages.first[:role]).to eq('system')
@@ -50,7 +50,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
   end
 
   describe '#generate_response' do
-    let(:service) { described_class.new(assistant, config) }
+    let(:service) { described_class.new(topic, config) }
 
     it 'adds user input to messages when present' do
       expect do
@@ -100,7 +100,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
 
           expect(result).to eq({ 'content' => 'Tool response processed' })
           expect(service.messages).to include(
-            { role: 'assistant', tool_calls: tool_calls }
+            { role: 'topic', tool_calls: tool_calls }
           )
           expect(service.messages).to include(
             {
@@ -129,7 +129,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
           expect(result).to eq({ 'content' => 'Tool response processed' })
           expect(service.messages).to include(
             {
-              role: 'assistant', tool_calls: tool_calls
+              role: 'topic', tool_calls: tool_calls
             }
           )
           expect(service.messages).to include(
@@ -146,12 +146,12 @@ RSpec.describe AIAgent::Copilot::ChatService do
 
   describe '#setup_user' do
     it 'sets user when user_id is present in config' do
-      service = described_class.new(assistant, { user_id: user.id })
+      service = described_class.new(topic, { user_id: user.id })
       expect(service.user).to eq(user)
     end
 
     it 'does not set user when user_id is not present in config' do
-      service = described_class.new(assistant, {})
+      service = described_class.new(topic, {})
       expect(service.user).to be_nil
     end
   end
@@ -159,7 +159,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
   describe '#setup_message_history' do
     context 'when thread_id is present' do
       it 'finds the copilot thread and sets previous history from it' do
-        service = described_class.new(assistant, { thread_id: copilot_thread.id })
+        service = described_class.new(topic, { thread_id: copilot_thread.id })
 
         expect(service.copilot_thread).to eq(copilot_thread)
         expect(service.previous_history).to eq previous_history
@@ -169,14 +169,14 @@ RSpec.describe AIAgent::Copilot::ChatService do
     context 'when thread_id is not present' do
       it 'uses previous_history from config if present' do
         custom_history = [{ role: 'user', content: 'Custom message' }]
-        service = described_class.new(assistant, { previous_history: custom_history })
+        service = described_class.new(topic, { previous_history: custom_history })
 
         expect(service.copilot_thread).to be_nil
         expect(service.previous_history).to eq(custom_history)
       end
 
       it 'uses empty array if previous_history is not present in config' do
-        service = described_class.new(assistant, {})
+        service = described_class.new(topic, {})
 
         expect(service.copilot_thread).to be_nil
         expect(service.previous_history).to eq([])
@@ -186,7 +186,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
 
   describe '#build_messages' do
     it 'includes system message and account context' do
-      service = described_class.new(assistant, {})
+      service = described_class.new(topic, {})
       messages = service.messages
 
       expect(messages.first[:role]).to eq('system')
@@ -196,7 +196,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
 
     it 'includes previous history when present' do
       custom_history = [{ role: 'user', content: 'Custom message' }]
-      service = described_class.new(assistant, { previous_history: custom_history })
+      service = described_class.new(topic, { previous_history: custom_history })
       messages = service.messages
 
       expect(messages.count).to be >= 3
@@ -204,7 +204,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
     end
 
     it 'includes current viewing history when conversation_id is present' do
-      service = described_class.new(assistant, { conversation_id: conversation.display_id })
+      service = described_class.new(topic, { conversation_id: conversation.display_id })
       messages = service.messages
 
       viewing_history = messages.find { |m| m[:content].include?('You are currently viewing the conversation') }
@@ -222,11 +222,11 @@ RSpec.describe AIAgent::Copilot::ChatService do
         }.with_indifferent_access)
 
         expect do
-          described_class.new(assistant, { thread_id: copilot_thread.id }).generate_response('Hello')
+          described_class.new(topic, { thread_id: copilot_thread.id }).generate_response('Hello')
         end.to change(CopilotMessage, :count).by(1)
 
         last_message = CopilotMessage.last
-        expect(last_message.message_type).to eq('assistant')
+        expect(last_message.message_type).to eq('topic')
         expect(last_message.message['content']).to eq('Hey')
       end
     end
@@ -238,7 +238,7 @@ RSpec.describe AIAgent::Copilot::ChatService do
         }.with_indifferent_access)
 
         expect do
-          described_class.new(assistant, {}).generate_response('Hello')
+          described_class.new(topic, {}).generate_response('Hello')
         end.not_to(change(CopilotMessage, :count))
       end
     end
