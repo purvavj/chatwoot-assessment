@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
+RSpec.describe 'Api::V1::Accounts::AIAgent::Documents', type: :request do
   let(:account) { create(:account, custom_attributes: { plan_name: 'startups' }) }
   let(:admin) { create(:user, account: account, role: :administrator) }
   let(:agent) { create(:user, account: account, role: :agent) }
-  let(:assistant) { create(:captain_assistant, account: account) }
-  let(:assistant2) { create(:captain_assistant, account: account) }
-  let(:document) { create(:captain_document, assistant: assistant, account: account) }
-  let(:captain_limits) do
+  let(:assistant) { create(:aiagent_assistant, account: account) }
+  let(:assistant2) { create(:aiagent_assistant, account: account) }
+  let(:document) { create(:aiagent_document, assistant: assistant, account: account) }
+  let(:aiagent_limits) do
     {
       :startups => { :documents => 1, :responses => 100 }
     }.with_indifferent_access
@@ -17,10 +17,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  describe 'GET /api/v1/accounts/:account_id/captain/documents' do
+  describe 'GET /api/v1/accounts/:account_id/aiagent/documents' do
     context 'when it is an un-authenticated user' do
       before do
-        get "/api/v1/accounts/#{account.id}/captain/documents"
+        get "/api/v1/accounts/#{account.id}/aiagent/documents"
       end
 
       it 'returns unauthorized status' do
@@ -31,11 +31,11 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     context 'when it is an agent' do
       context 'when no filters are applied' do
         before do
-          create_list(:captain_document, 30, assistant: assistant, account: account)
+          create_list(:aiagent_document, 30, assistant: assistant, account: account)
         end
 
         it 'returns the first page of documents' do
-          get "/api/v1/accounts/#{account.id}/captain/documents", headers: agent.create_new_auth_token, as: :json
+          get "/api/v1/accounts/#{account.id}/aiagent/documents", headers: agent.create_new_auth_token, as: :json
 
           expect(response).to have_http_status(:ok)
           expect(json_response[:payload].length).to eq(25)
@@ -43,7 +43,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
         end
 
         it 'returns the second page of documents' do
-          get "/api/v1/accounts/#{account.id}/captain/documents",
+          get "/api/v1/accounts/#{account.id}/aiagent/documents",
               params: { page: 2 },
               headers: agent.create_new_auth_token, as: :json
 
@@ -55,12 +55,12 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
       context 'when filtering by assistant_id' do
         before do
-          create_list(:captain_document, 3, assistant: assistant, account: account)
-          create_list(:captain_document, 2, assistant: assistant2, account: account)
+          create_list(:aiagent_document, 3, assistant: assistant, account: account)
+          create_list(:aiagent_document, 2, assistant: assistant2, account: account)
         end
 
         it 'returns only documents for the specified assistant' do
-          get "/api/v1/accounts/#{account.id}/captain/documents",
+          get "/api/v1/accounts/#{account.id}/aiagent/documents",
               params: { assistant_id: assistant.id },
               headers: agent.create_new_auth_token, as: :json
           expect(response).to have_http_status(:ok)
@@ -69,8 +69,8 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
         end
 
         it 'returns empty array when assistant has no documents' do
-          new_assistant = create(:captain_assistant, account: account)
-          get "/api/v1/accounts/#{account.id}/captain/documents",
+          new_assistant = create(:aiagent_assistant, account: account)
+          get "/api/v1/accounts/#{account.id}/aiagent/documents",
               params: { assistant_id: new_assistant.id },
               headers: agent.create_new_auth_token, as: :json
           expect(response).to have_http_status(:ok)
@@ -82,12 +82,12 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
         let(:other_account) { create(:account) }
 
         before do
-          create_list(:captain_document, 3, assistant: assistant, account: account)
-          create_list(:captain_document, 2, account: other_account)
+          create_list(:aiagent_document, 3, assistant: assistant, account: account)
+          create_list(:aiagent_document, 2, account: other_account)
         end
 
         it 'only returns documents for the current account' do
-          get "/api/v1/accounts/#{account.id}/captain/documents",
+          get "/api/v1/accounts/#{account.id}/aiagent/documents",
               headers: agent.create_new_auth_token, as: :json
           expect(response).to have_http_status(:ok)
           expect(json_response[:payload].length).to eq(3)
@@ -98,12 +98,12 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
       context 'with pagination and assistant filter combined' do
         before do
-          create_list(:captain_document, 30, assistant: assistant, account: account)
-          create_list(:captain_document, 10, assistant: assistant2, account: account)
+          create_list(:aiagent_document, 30, assistant: assistant, account: account)
+          create_list(:aiagent_document, 10, assistant: assistant2, account: account)
         end
 
         it 'returns paginated results for specific assistant' do
-          get "/api/v1/accounts/#{account.id}/captain/documents",
+          get "/api/v1/accounts/#{account.id}/aiagent/documents",
               params: { assistant_id: assistant.id, page: 2 },
               headers: agent.create_new_auth_token, as: :json
           expect(response).to have_http_status(:ok)
@@ -115,10 +115,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     end
   end
 
-  describe 'GET /api/v1/accounts/:account_id/captain/documents/:id' do
+  describe 'GET /api/v1/accounts/:account_id/aiagent/documents/:id' do
     context 'when it is an un-authenticated user' do
       before do
-        get "/api/v1/accounts/#{account.id}/captain/documents/#{document.id}"
+        get "/api/v1/accounts/#{account.id}/aiagent/documents/#{document.id}"
       end
 
       it 'returns unauthorized status' do
@@ -128,7 +128,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
     context 'when it is an agent' do
       before do
-        get "/api/v1/accounts/#{account.id}/captain/documents/#{document.id}",
+        get "/api/v1/accounts/#{account.id}/aiagent/documents/#{document.id}",
             headers: agent.create_new_auth_token, as: :json
       end
 
@@ -144,7 +144,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     end
   end
 
-  describe 'POST /api/v1/accounts/:account_id/captain/documents' do
+  describe 'POST /api/v1/accounts/:account_id/aiagent/documents' do
     let(:valid_attributes) do
       {
         document: {
@@ -166,7 +166,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
     context 'when it is an un-authenticated user' do
       before do
-        post "/api/v1/accounts/#{account.id}/captain/documents",
+        post "/api/v1/accounts/#{account.id}/aiagent/documents",
              params: valid_attributes, as: :json
       end
 
@@ -177,7 +177,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
     context 'when it is an agent' do
       it 'returns unauthorized' do
-        post "/api/v1/accounts/#{account.id}/captain/documents",
+        post "/api/v1/accounts/#{account.id}/aiagent/documents",
              params: valid_attributes,
              headers: agent.create_new_auth_token
 
@@ -189,14 +189,14 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
       context 'with valid parameters' do
         it 'creates a new document' do
           expect do
-            post "/api/v1/accounts/#{account.id}/captain/documents",
+            post "/api/v1/accounts/#{account.id}/aiagent/documents",
                  params: valid_attributes,
                  headers: admin.create_new_auth_token
-          end.to change(Captain::Document, :count).by(1)
+          end.to change(AIAgent::Document, :count).by(1)
         end
 
         it 'returns success status and the created document' do
-          post "/api/v1/accounts/#{account.id}/captain/documents",
+          post "/api/v1/accounts/#{account.id}/aiagent/documents",
                params: valid_attributes,
                headers: admin.create_new_auth_token, as: :json
 
@@ -208,7 +208,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
       context 'with invalid parameters' do
         before do
-          post "/api/v1/accounts/#{account.id}/captain/documents",
+          post "/api/v1/accounts/#{account.id}/aiagent/documents",
                params: invalid_attributes,
                headers: admin.create_new_auth_token
         end
@@ -220,10 +220,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
       context 'with limits exceeded' do
         before do
-          create_list(:captain_document, 5, assistant: assistant, account: account)
+          create_list(:aiagent_document, 5, assistant: assistant, account: account)
 
-          create(:installation_config, name: 'CAPTAIN_CLOUD_PLAN_LIMITS', value: captain_limits.to_json)
-          post "/api/v1/accounts/#{account.id}/captain/documents",
+          create(:installation_config, name: 'AI_AGENT_CLOUD_PLAN_LIMITS', value: aiagent_limits.to_json)
+          post "/api/v1/accounts/#{account.id}/aiagent/documents",
                params: valid_attributes,
                headers: admin.create_new_auth_token
         end
@@ -235,10 +235,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     end
   end
 
-  describe 'DELETE /api/v1/accounts/:account_id/captain/documents/:id' do
+  describe 'DELETE /api/v1/accounts/:account_id/aiagent/documents/:id' do
     context 'when it is an un-authenticated user' do
       before do
-        delete "/api/v1/accounts/#{account.id}/captain/documents/#{document.id}"
+        delete "/api/v1/accounts/#{account.id}/aiagent/documents/#{document.id}"
       end
 
       it 'returns unauthorized status' do
@@ -247,10 +247,10 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
     end
 
     context 'when it is an agent' do
-      let!(:document_to_delete) { create(:captain_document, assistant: assistant) }
+      let!(:document_to_delete) { create(:aiagent_document, assistant: assistant) }
 
       it 'deletes the document' do
-        delete "/api/v1/accounts/#{account.id}/captain/documents/#{document_to_delete.id}",
+        delete "/api/v1/accounts/#{account.id}/aiagent/documents/#{document_to_delete.id}",
                headers: agent.create_new_auth_token
 
         expect(response).to have_http_status(:unauthorized)
@@ -259,17 +259,17 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
     context 'when it is an admin' do
       context 'when document exists' do
-        let!(:document_to_delete) { create(:captain_document, assistant: assistant) }
+        let!(:document_to_delete) { create(:aiagent_document, assistant: assistant) }
 
         it 'deletes the document' do
           expect do
-            delete "/api/v1/accounts/#{account.id}/captain/documents/#{document_to_delete.id}",
+            delete "/api/v1/accounts/#{account.id}/aiagent/documents/#{document_to_delete.id}",
                    headers: admin.create_new_auth_token
-          end.to change(Captain::Document, :count).by(-1)
+          end.to change(AIAgent::Document, :count).by(-1)
         end
 
         it 'returns no content status' do
-          delete "/api/v1/accounts/#{account.id}/captain/documents/#{document_to_delete.id}",
+          delete "/api/v1/accounts/#{account.id}/aiagent/documents/#{document_to_delete.id}",
                  headers: admin.create_new_auth_token
 
           expect(response).to have_http_status(:no_content)
@@ -278,7 +278,7 @@ RSpec.describe 'Api::V1::Accounts::Captain::Documents', type: :request do
 
       context 'when document does not exist' do
         before do
-          delete "/api/v1/accounts/#{account.id}/captain/documents/invalid_id",
+          delete "/api/v1/accounts/#{account.id}/aiagent/documents/invalid_id",
                  headers: admin.create_new_auth_token
         end
 

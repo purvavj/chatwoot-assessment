@@ -252,7 +252,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_23_031839) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "captain_assistant_responses", force: :cascade do |t|
+  create_table "aiagent_assistant_responses", force: :cascade do |t|
     t.string "question", null: false
     t.text "answer", null: false
     t.vector "embedding", limit: 1536
@@ -263,24 +263,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_23_031839) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 1, null: false
     t.string "documentable_type"
-    t.index ["account_id"], name: "index_captain_assistant_responses_on_account_id"
-    t.index ["assistant_id"], name: "index_captain_assistant_responses_on_assistant_id"
+    t.index ["account_id"], name: "index_aiagent_assistant_responses_on_account_id"
+    t.index ["assistant_id"], name: "index_aiagent_assistant_responses_on_assistant_id"
     t.index ["documentable_id", "documentable_type"], name: "idx_cap_asst_resp_on_documentable"
     t.index ["embedding"], name: "vector_idx_knowledge_entries_embedding", using: :ivfflat
-    t.index ["status"], name: "index_captain_assistant_responses_on_status"
+    t.index ["status"], name: "index_aiagent_assistant_responses_on_status"
   end
 
-  create_table "captain_assistants", force: :cascade do |t|
+  create_table "aiagent_assistants", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "account_id", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "config", default: {}, null: false
-    t.index ["account_id"], name: "index_captain_assistants_on_account_id"
+    t.index ["account_id"], name: "index_aiagent_assistants_on_account_id"
   end
 
-  create_table "captain_documents", force: :cascade do |t|
+  create_table "aiagent_documents", force: :cascade do |t|
     t.string "name"
     t.string "external_link", null: false
     t.text "content"
@@ -289,20 +289,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_23_031839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0, null: false
-    t.index ["account_id"], name: "index_captain_documents_on_account_id"
-    t.index ["assistant_id", "external_link"], name: "index_captain_documents_on_assistant_id_and_external_link", unique: true
-    t.index ["assistant_id"], name: "index_captain_documents_on_assistant_id"
-    t.index ["status"], name: "index_captain_documents_on_status"
+    t.index ["account_id"], name: "index_aiagent_documents_on_account_id"
+    t.index ["assistant_id", "external_link"], name: "index_aiagent_documents_on_assistant_id_and_external_link", unique: true
+    t.index ["assistant_id"], name: "index_aiagent_documents_on_assistant_id"
+    t.index ["status"], name: "index_aiagent_documents_on_status"
   end
 
-  create_table "captain_inboxes", force: :cascade do |t|
-    t.bigint "captain_assistant_id", null: false
+  create_table "aiagent_inboxes", force: :cascade do |t|
+    t.bigint "aiagent_assistant_id", null: false
     t.bigint "inbox_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["captain_assistant_id", "inbox_id"], name: "index_captain_inboxes_on_captain_assistant_id_and_inbox_id", unique: true
-    t.index ["captain_assistant_id"], name: "index_captain_inboxes_on_captain_assistant_id"
-    t.index ["inbox_id"], name: "index_captain_inboxes_on_inbox_id"
+    t.index ["aiagent_assistant_id", "inbox_id"], name: "index_aiagent_inboxes_on_aiagent_assistant_id_and_inbox_id", unique: true
+    t.index ["aiagent_assistant_id"], name: "index_aiagent_inboxes_on_aiagent_assistant_id"
+    t.index ["inbox_id"], name: "index_aiagent_inboxes_on_inbox_id"
   end
 
   create_table "categories", force: :cascade do |t|

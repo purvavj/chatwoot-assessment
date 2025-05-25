@@ -19,11 +19,11 @@
     "DESCRIPTION": "Chatwoot integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",
     "LOADING": "Fetching integrations",
-    "CAPTAIN": {
-      "DISABLED": "Captain is not enabled on your account.",
+    "AI_AGENT": {
+      "DISABLED": "AI Agent is not enabled on your account.",
       "CLICK_HERE_TO_CONFIGURE": "Click here to configure",
-      "LOADING_CONSOLE": "Loading Captain Console...",
-      "FAILED_TO_LOAD_CONSOLE": "Failed to load Captain Console. Please refresh and try again."
+      "LOADING_CONSOLE": "Loading AI Agent Console...",
+      "FAILED_TO_LOAD_CONSOLE": "Failed to load AI Agent Console. Please refresh and try again."
     },
     "WEBHOOK": {
       "SUBSCRIBED_EVENTS": "Subscribed Events",
@@ -326,17 +326,17 @@
       }
     }
   },
-  "CAPTAIN": {
-    "NAME": "Captain",
+  "AI_AGENT": {
+    "NAME": "AI Agent",
     "HEADER_KNOW_MORE": "Know more",
     "COPILOT": {
       "SEND_MESSAGE": "Send message...",
       "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
-      "LOADER": "Captain is thinking",
+      "LOADER": "AI Agent is thinking",
       "YOU": "You",
       "USE": "Use this",
       "RESET": "Reset",
-      "SELECT_ASSISTANT": "Select Assistant",
+      "SELECT_TOPIC": "Select Topic",
       "PROMPTS": {
         "SUMMARIZE": {
           "LABEL": "Summarize this conversation",
@@ -354,35 +354,35 @@
     },
     "PLAYGROUND": {
       "USER": "You",
-      "ASSISTANT": "Assistant",
+      "TOPIC": "Topic",
       "MESSAGE_PLACEHOLDER": "Type your message...",
       "HEADER": "Playground",
       "DESCRIPTION": "Use this playground to send messages to your assistant and check if it responds accurately, quickly, and in the tone you expect.",
-      "CREDIT_NOTE": "Messages sent here will count toward your Captain credits."
+      "CREDIT_NOTE": "Messages sent here will count toward your AI Agent credits."
     },
     "PAYWALL": {
-      "TITLE": "Upgrade to use Captain AI",
-      "AVAILABLE_ON": "Captain is not available on the free plan.",
+      "TITLE": "Upgrade to use AI Agent AI",
+      "AVAILABLE_ON": "AI Agent is not available on the free plan.",
       "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
       "UPGRADE_NOW": "Upgrade now",
       "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Captain AI feature is only available in a paid plan.",
+      "AVAILABLE_ON": "AI Agent AI feature is only available in a paid plan.",
       "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
       "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
     "BANNER": {
-      "RESPONSES": "You've used over 80% of your response limit. To continue using Captain AI, please upgrade.",
-      "DOCUMENTS": "Document limit reached. Upgrade to continue using Captain AI."
+      "RESPONSES": "You've used over 80% of your response limit. To continue using AI Agent, please upgrade.",
+      "DOCUMENTS": "Document limit reached. Upgrade to continue using AI Agent."
     },
     "FORM": {
       "CANCEL": "Cancel",
       "CREATE": "Create",
       "EDIT": "Update"
     },
-    "ASSISTANTS": {
-      "HEADER": "Assistants",
+    "TOPICS": {
+      "HEADER": "Topics",
       "ADD_NEW": "Create a new assistant",
       "DELETE": {
         "TITLE": "Are you sure to delete the assistant?",
@@ -450,16 +450,16 @@
         "NOT_FOUND": "Could not find the assistant. Please try again."
       },
       "OPTIONS": {
-        "EDIT_ASSISTANT": "Edit Assistant",
-        "DELETE_ASSISTANT": "Delete Assistant",
+        "EDIT_TOPIC": "Edit Topic",
+        "DELETE_TOPIC": "Delete Topic",
         "VIEW_CONNECTED_INBOXES": "View connected inboxes"
       },
       "EMPTY_STATE": {
         "TITLE": "No assistants available",
         "SUBTITLE": "Create an assistant to provide quick and accurate responses to your users. It can learn from your help articles and past conversations.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Captain Assistant",
-          "NOTE": "Captain Assistant engages directly with customers, learns from your help docs and past conversations, and delivers instant, accurate responses. It handles the initial queries, providing quick resolutions before  transferring to an agent when needed."
+          "TITLE": "AI Agent Topic",
+          "NOTE": "AI Agent Topic engages directly with customers, learns from your help docs and past conversations, and delivers instant, accurate responses. It handles the initial queries, providing quick resolutions before  transferring to an agent when needed."
         }
       }
     },
@@ -482,8 +482,8 @@
           "PLACEHOLDER": "Enter the URL of the document",
           "ERROR": "Please provide a valid URL for the document"
         },
-        "ASSISTANT": {
-          "LABEL": "Assistant",
+        "TOPIC": {
+          "LABEL": "Topic",
           "PLACEHOLDER": "Select the assistant",
           "ERROR": "The assistant field is required"
         }
@@ -503,8 +503,8 @@
         "TITLE": "No documents available",
         "SUBTITLE": "Documents are used by your assistant to generate FAQs. You can import documents to provide context for your assistant.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Captain Document",
-          "NOTE": "A document in Captain serves as a knowledge resource for the assistant. By connecting your help center or guides, Captain can analyze the content and provide accurate responses for customer inquiries."
+          "TITLE": "AI Agent Document",
+          "NOTE": "A document in AI Agent serves as a knowledge resource for the assistant. By connecting your help center or guides, AI Agent can analyze the content and provide accurate responses for customer inquiries."
         }
       }
     },
@@ -536,9 +536,9 @@
         "ERROR_MESSAGE": "There was an error deleting the FAQ, please try again."
       },
       "FILTER": {
-        "ASSISTANT": "Assistant: {selected}",
+        "TOPIC": "Topic: {selected}",
         "STATUS": "Status: {selected}",
-        "ALL_ASSISTANTS": "All"
+        "ALL_TOPICS": "All"
       },
       "STATUS": {
         "TITLE": "Status",
@@ -563,8 +563,8 @@
           "PLACEHOLDER": "Enter the answer here",
           "ERROR": "Please provide a valid answer."
         },
-        "ASSISTANT": {
-          "LABEL": "Assistant",
+        "TOPIC": {
+          "LABEL": "Topic",
           "PLACEHOLDER": "Select an assistant",
           "ERROR": "Please select an assistant."
         }
@@ -584,8 +584,8 @@
         "TITLE": "No FAQs Found",
         "SUBTITLE": "FAQs help your assistant provide quick and accurate answers to questions from your customers. They can be generated automatically from your content or can be added manually.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Captain FAQ",
-          "NOTE": "Captain FAQs detects common customer questions—whether missing from your knowledge base or frequently asked—and generates relevant FAQs to improve support. You can review each suggestion and decide whether to approve or reject it."
+          "TITLE": "AI Agent FAQ",
+          "NOTE": "AI Agent FAQs detects common customer questions—whether missing from your knowledge base or frequently asked—and generates relevant FAQs to improve support. You can review each suggestion and decide whether to approve or reject it."
         }
       }
     },

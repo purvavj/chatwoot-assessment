@@ -4,7 +4,7 @@ import CopilotHeader from './CopilotHeader.vue';
 
 <template>
   <Story
-    title="Captain/Copilot/CopilotHeader"
+    title="AIAgent/Copilot/CopilotHeader"
     :layout="{ type: 'grid', width: '800px' }"
   >
     <!-- Default State -->

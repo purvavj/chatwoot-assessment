@@ -280,10 +280,10 @@
     "REPORTS": "Rapoarte",
     "SETTINGS": "Setări",
     "CONTACTS": "Contacte",
-    "CAPTAIN": "Captain",
-    "CAPTAIN_ASSISTANTS": "Assistants",
-    "CAPTAIN_DOCUMENTS": "Documents",
-    "CAPTAIN_RESPONSES": "FAQs",
+    "AI_AGENT": "AI Agent",
+    "AI_AGENT_TOPICS": "Topics",
+    "AI_AGENT_DOCUMENTS": "Documents",
+    "AI_AGENT_RESPONSES": "FAQs",
     "HOME": "Acasa",
     "AGENTS": "Agenți",
     "AGENT_BOTS": "Boți",
@@ -358,13 +358,13 @@
       "DESCRIPTION": "Vizualizați facturile anterioare, editați detaliile de facturare sau anulați abonamentul.",
       "BUTTON_TXT": "Accesați portalul de facturare"
     },
-    "CAPTAIN": {
-      "TITLE": "Captain",
-      "DESCRIPTION": "Manage usage and credits for Captain AI.",
+    "AI_AGENT": {
+      "TITLE": "AI Agent",
+      "DESCRIPTION": "Manage usage and credits for AI Agent.",
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Responses",
-      "UPGRADE": "Captain is not available on the free plan, upgrade now to get access to assistants, copilot and more."
+      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
     },
     "CHAT_WITH_US": {
       "TITLE": "Aveţi nevoie de ajutor?",

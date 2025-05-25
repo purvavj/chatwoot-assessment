@@ -15,7 +15,7 @@ defineEmits(['reset', 'close']);
   >
     <div class="flex items-center justify-between gap-2 flex-1">
       <span class="font-medium text-sm text-n-slate-12">
-        {{ $t('CAPTAIN.COPILOT.TITLE') }}
+        {{ $t('AI_AGENT.COPILOT.TITLE') }}
       </span>
       <div class="flex items-center">
         <Button

@@ -10,23 +10,23 @@ import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Checkbox from 'dashboard/components-next/checkbox/Checkbox.vue';
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
-import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
-import BulkDeleteDialog from 'dashboard/components-next/captain/pageComponents/BulkDeleteDialog.vue';
-import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
-import AssistantSelector from 'dashboard/components-next/captain/pageComponents/AssistantSelector.vue';
-import ResponseCard from 'dashboard/components-next/captain/assistant/ResponseCard.vue';
-import CreateResponseDialog from 'dashboard/components-next/captain/pageComponents/response/CreateResponseDialog.vue';
-import ResponsePageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/ResponsePageEmptyState.vue';
+import DeleteDialog from 'dashboard/components-next/aiagent/pageComponents/DeleteDialog.vue';
+import BulkDeleteDialog from 'dashboard/components-next/aiagent/pageComponents/BulkDeleteDialog.vue';
+import PageLayout from 'dashboard/components-next/aiagent/PageLayout.vue';
+import AIAgentPaywall from 'dashboard/components-next/aiagent/pageComponents/Paywall.vue';
+import AssistantSelector from 'dashboard/components-next/aiagent/pageComponents/AssistantSelector.vue';
+import ResponseCard from 'dashboard/components-next/aiagent/assistant/ResponseCard.vue';
+import CreateResponseDialog from 'dashboard/components-next/aiagent/pageComponents/response/CreateResponseDialog.vue';
+import ResponsePageEmptyState from 'dashboard/components-next/aiagent/pageComponents/emptyStates/ResponsePageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/response/LimitBanner.vue';
+import LimitBanner from 'dashboard/components-next/aiagent/pageComponents/response/LimitBanner.vue';
 
 const router = useRouter();
 const store = useStore();
-const uiFlags = useMapGetter('captainResponses/getUIFlags');
-const assistants = useMapGetter('captainAssistants/getRecords');
-const responseMeta = useMapGetter('captainResponses/getMeta');
-const responses = useMapGetter('captainResponses/getRecords');
+const uiFlags = useMapGetter('aiagentResponses/getUIFlags');
+const assistants = useMapGetter('aiagentAssistants/getRecords');
+const responseMeta = useMapGetter('aiagentResponses/getMeta');
+const responses = useMapGetter('aiagentResponses/getRecords');
 const isFetching = computed(() => uiFlags.value.fetchingList);
 
 const selectedResponse = ref(null);
@@ -49,7 +49,7 @@ const shouldShowDropdown = computed(() => {
 
 const statusOptions = computed(() =>
   ['all', 'pending', 'approved'].map(key => ({
-    label: t(`CAPTAIN.RESPONSES.STATUS.${key.toUpperCase()}`),
+    label: t(`AI_AGENT.RESPONSES.STATUS.${key.toUpperCase()}`),
     value: key,
     action: 'filter',
   }))
@@ -59,7 +59,7 @@ const selectedStatusLabel = computed(() => {
   const status = statusOptions.value.find(
     option => option.value === selectedStatus.value
   );
-  return t('CAPTAIN.RESPONSES.FILTER.STATUS', {
+  return t('AI_AGENT.RESPONSES.FILTER.STATUS', {
     selected: status ? status.label : '',
   });
 });
@@ -69,14 +69,14 @@ const handleDelete = () => {
 };
 const handleAccept = async () => {
   try {
-    await store.dispatch('captainResponses/update', {
+    await store.dispatch('aiagentResponses/update', {
       id: selectedResponse.value.id,
       status: 'approved',
     });
-    useAlert(t(`CAPTAIN.RESPONSES.EDIT.APPROVE_SUCCESS_MESSAGE`));
+    useAlert(t(`AI_AGENT.RESPONSES.EDIT.APPROVE_SUCCESS_MESSAGE`));
   } catch (error) {
     const errorMessage =
-      error?.message || t(`CAPTAIN.RESPONSES.EDIT.ERROR_MESSAGE`);
+      error?.message || t(`AI_AGENT.RESPONSES.EDIT.ERROR_MESSAGE`);
     useAlert(errorMessage);
   } finally {
     selectedResponse.value = null;
@@ -130,7 +130,7 @@ const fetchResponses = (page = 1) => {
   if (selectedAssistant.value !== 'all') {
     filterParams.assistantId = selectedAssistant.value;
   }
-  store.dispatch('captainResponses/get', filterParams);
+  store.dispatch('aiagentResponses/get', filterParams);
 };
 
 // Bulk action
@@ -170,16 +170,16 @@ const handleCardSelect = id => {
 const handleBulkApprove = async () => {
   try {
     await store.dispatch(
-      'captainBulkActions/handleBulkApprove',
+      'aiagentBulkActions/handleBulkApprove',
       Array.from(bulkSelectedIds.value)
     );
 
     // Clear selection
     bulkSelectedIds.value = new Set();
-    useAlert(t('CAPTAIN.RESPONSES.BULK_APPROVE.SUCCESS_MESSAGE'));
+    useAlert(t('AI_AGENT.RESPONSES.BULK_APPROVE.SUCCESS_MESSAGE'));
   } catch (error) {
     useAlert(
-      error?.message || t('CAPTAIN.RESPONSES.BULK_APPROVE.ERROR_MESSAGE')
+      error?.message || t('AI_AGENT.RESPONSES.BULK_APPROVE.ERROR_MESSAGE')
     );
   }
 };
@@ -229,7 +229,7 @@ const handleAssistantFilterChange = assistant => {
 };
 
 onMounted(() => {
-  store.dispatch('captainAssistants/get');
+  store.dispatch('aiagentAssistants/get');
   fetchResponses();
 });
 </script>
@@ -239,23 +239,23 @@ onMounted(() => {
     :total-count="responseMeta.totalCount"
     :current-page="responseMeta.page"
     :button-policy="['administrator']"
-    :header-title="$t('CAPTAIN.RESPONSES.HEADER')"
-    :button-label="$t('CAPTAIN.RESPONSES.ADD_NEW')"
+    :header-title="$t('AI_AGENT.RESPONSES.HEADER')"
+    :button-label="$t('AI_AGENT.RESPONSES.ADD_NEW')"
     :is-fetching="isFetching"
     :is-empty="!responses.length"
     :show-pagination-footer="!isFetching && !!responses.length"
-    :feature-flag="FEATURE_FLAGS.CAPTAIN"
+    :feature-flag="FEATURE_FLAGS.AI_AGENT"
     @update:current-page="onPageChange"
     @click="handleCreate"
   >
     <template #knowMore>
       <FeatureSpotlightPopover
-        :button-label="$t('CAPTAIN.HEADER_KNOW_MORE')"
-        :title="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-        :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
-        fallback-thumbnail="/assets/images/dashboard/captain/faqs-popover-light.svg"
-        fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-popover-dark.svg"
-        learn-more-url="https://chwt.app/captain-faq"
+        :button-label="$t('AI_AGENT.HEADER_KNOW_MORE')"
+        :title="$t('AI_AGENT.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+        :note="$t('AI_AGENT.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+        fallback-thumbnail="/assets/images/dashboard/aiagent/faqs-popover-light.svg"
+        fallback-thumbnail-dark="/assets/images/dashboard/aiagent/faqs-popover-dark.svg"
+        learn-more-url="https://chwt.app/aiagent-faq"
       />
     </template>
 
@@ -264,7 +264,7 @@ onMounted(() => {
     </template>
 
     <template #paywall>
-      <CaptainPaywall />
+      <AIAgentPaywall />
     </template>
 
     <template #controls>
@@ -315,7 +315,7 @@ onMounted(() => {
               />
               <span class="text-sm text-n-slate-10 tabular-nums">
                 {{
-                  $t('CAPTAIN.RESPONSES.SELECTED', {
+                  $t('AI_AGENT.RESPONSES.SELECTED', {
                     count: bulkSelectedIds.size,
                   })
                 }}
@@ -324,13 +324,13 @@ onMounted(() => {
             <div class="h-4 w-px bg-n-strong" />
             <div class="flex gap-2">
               <Button
-                :label="$t('CAPTAIN.RESPONSES.BULK_APPROVE_BUTTON')"
+                :label="$t('AI_AGENT.RESPONSES.BULK_APPROVE_BUTTON')"
                 sm
                 slate
                 @click="handleBulkApprove"
               />
               <Button
-                :label="$t('CAPTAIN.RESPONSES.BULK_DELETE_BUTTON')"
+                :label="$t('AI_AGENT.RESPONSES.BULK_DELETE_BUTTON')"
                 sm
                 slate
                 @click="bulkDeleteDialog.dialogRef.open()"

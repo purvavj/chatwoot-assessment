@@ -21,7 +21,7 @@ const messages = [
 </script>
 
 <template>
-  <Story title="Captain/Copilot/CopilotThinkingGroup" group="components">
+  <Story title="AIAgent/Copilot/CopilotThinkingGroup" group="components">
     <Variant title="Default">
       <CopilotThinkingGroup :messages="messages" />
     </Variant>
