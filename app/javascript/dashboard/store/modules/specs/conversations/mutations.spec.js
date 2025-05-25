@@ -555,18 +555,18 @@ describe('#mutations', () => {
     });
   });
 
-  describe('#SET_INBOX_AI_AGENT_ASSISTANT', () => {
+  describe('#SET_INBOX_AI_AGENT_TOPIC', () => {
     it('set inbox ai agent topic', () => {
-      const state = { copilotAssistant: {} };
+      const state = { copilotTopic: {} };
       const data = {
-        assistant: {
+        topic: {
           id: 1,
-          name: 'Assistant',
-          description: 'Assistant description',
+          name: 'Topic',
+          description: 'Topic description',
         },
       };
-      mutations[types.SET_INBOX_AI_AGENT_ASSISTANT](state, data);
-      expect(state.copilotAssistant).toEqual(data.assistant);
+      mutations[types.SET_INBOX_AI_AGENT_TOPIC](state, data);
+      expect(state.copilotTopic).toEqual(data.topic);
     });
   });
 

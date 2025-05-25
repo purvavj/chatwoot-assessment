@@ -6,10 +6,10 @@ export default createStore({
   name: 'AIAgentInbox',
   API: AIAgentInboxes,
   actions: mutations => ({
-    delete: async function remove({ commit }, { inboxId, assistantId }) {
+    delete: async function remove({ commit }, { inboxId, topicId }) {
       commit(mutations.SET_UI_FLAG, { deletingItem: true });
       try {
-        await AIAgentInboxes.delete({ inboxId, assistantId });
+        await AIAgentInboxes.delete({ inboxId, topicId });
         commit(mutations.DELETE, inboxId);
         commit(mutations.SET_UI_FLAG, { deletingItem: false });
         return inboxId;

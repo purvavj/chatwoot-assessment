@@ -5,8 +5,8 @@ describe ActionCableListener do
     let(:event_name) { :copilot_message_created }
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:aiagent_assistant, account: account) }
-    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:topic) { create(:aiagent_topic, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, topic: topic) }
     let(:copilot_message) { create(:aiagent_copilot_message, copilot_thread: copilot_thread) }
     let(:event) { Events::Base.new(event_name, Time.zone.now, copilot_message: copilot_message) }
     let(:listener) { described_class.instance }

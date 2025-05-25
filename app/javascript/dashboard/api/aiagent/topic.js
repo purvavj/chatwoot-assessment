@@ -15,8 +15,8 @@ class AIAgentTopic extends ApiClient {
     });
   }
 
-  playground({ assistantId, messageContent, messageHistory }) {
-    return axios.post(`${this.url}/${assistantId}/playground`, {
+  playground({ topicId, messageContent, messageHistory }) {
+    return axios.post(`${this.url}/${topicId}/playground`, {
       message_content: messageContent,
       message_history: messageHistory,
     });

@@ -14,16 +14,16 @@ const onClick = () => {
 
 <template>
   <FeatureSpotlight
-    :title="$t('AI_AGENT.ASSISTANTS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-    :note="$t('AI_AGENT.ASSISTANTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+    :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+    :note="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
     fallback-thumbnail="/assets/images/dashboard/aiagent/topic-light.svg"
     fallback-thumbnail-dark="/assets/images/dashboard/aiagent/topic-dark.svg"
     learn-more-url="https://chwt.app/aiagent-topic"
     class="mb-8"
   />
   <EmptyStateLayout
-    :title="$t('AI_AGENT.ASSISTANTS.EMPTY_STATE.TITLE')"
-    :subtitle="$t('AI_AGENT.ASSISTANTS.EMPTY_STATE.SUBTITLE')"
+    :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.TITLE')"
+    :subtitle="$t('AI_AGENT.TOPICS.EMPTY_STATE.SUBTITLE')"
     :action-perms="['administrator']"
   >
     <template #empty-state-item>
@@ -40,7 +40,7 @@ const onClick = () => {
     </template>
     <template #actions>
       <Button
-        :label="$t('AI_AGENT.ASSISTANTS.ADD_NEW')"
+        :label="$t('AI_AGENT.TOPICS.ADD_NEW')"
         icon="i-lucide-plus"
         @click="onClick"
       />

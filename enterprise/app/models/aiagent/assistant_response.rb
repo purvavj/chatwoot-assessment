@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: aiagent_assistant_responses
+# Table name: aiagent_topic_responses
 #
 #  id                :bigint           not null, primary key
 #  answer            :text             not null
@@ -11,21 +11,21 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  account_id        :bigint           not null
-#  assistant_id      :bigint           not null
+#  topic_id      :bigint           not null
 #  documentable_id   :bigint
 #
 # Indexes
 #
 #  idx_cap_asst_resp_on_documentable                  (documentable_id,documentable_type)
-#  index_aiagent_assistant_responses_on_account_id    (account_id)
-#  index_aiagent_assistant_responses_on_assistant_id  (assistant_id)
-#  index_aiagent_assistant_responses_on_status        (status)
+#  index_aiagent_topic_responses_on_account_id    (account_id)
+#  index_aiagent_topic_responses_on_topic_id  (topic_id)
+#  index_aiagent_topic_responses_on_status        (status)
 #  vector_idx_knowledge_entries_embedding             (embedding) USING ivfflat
 #
-class AIAgent::AssistantResponse < ApplicationRecord
-  self.table_name = 'aiagent_assistant_responses'
+class AIAgent::TopicResponse < ApplicationRecord
+  self.table_name = 'aiagent_topic_responses'
 
-  belongs_to :assistant, class_name: 'AIAgent::Assistant'
+  belongs_to :topic, class_name: 'AIAgent::Topic'
   belongs_to :account
   belongs_to :documentable, polymorphic: true, optional: true
   has_neighbors :embedding, normalize: true
@@ -39,7 +39,7 @@ class AIAgent::AssistantResponse < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :desc) }
   scope :by_account, ->(account_id) { where(account_id: account_id) }
-  scope :by_assistant, ->(assistant_id) { where(assistant_id: assistant_id) }
+  scope :by_topic, ->(topic_id) { where(topic_id: topic_id) }
   scope :with_document, ->(document_id) { where(document_id: document_id) }
 
   enum status: { pending: 0, approved: 1 }
@@ -56,7 +56,7 @@ class AIAgent::AssistantResponse < ApplicationRecord
   end
 
   def ensure_account
-    self.account = assistant&.account
+    self.account = topic&.account
   end
 
   def update_response_embedding

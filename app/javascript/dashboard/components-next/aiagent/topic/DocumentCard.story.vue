@@ -18,7 +18,7 @@ import { documentsList } from 'dashboard/components-next/aiagent/pageComponents/
           :id="doc.id"
           :name="doc.name"
           :external-link="doc.external_link"
-          :assistant="doc.assistant"
+          :topic="doc.topic"
           :created-at="doc.created_at"
         />
       </div>

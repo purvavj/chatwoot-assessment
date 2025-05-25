@@ -35,7 +35,7 @@ const props = defineProps({
     type: Object,
     default: null,
   },
-  assistant: {
+  topic: {
     type: Object,
     default: () => ({}),
   },
@@ -102,7 +102,7 @@ const timestamp = computed(() =>
   dynamicTime(props.updatedAt || props.createdAt)
 );
 
-const handleAssistantAction = ({ action, value }) => {
+const handleTopicAction = ({ action, value }) => {
   toggleDropdown(false);
   emit('action', { action, value, id: props.id });
 };
@@ -147,7 +147,7 @@ const handleDocumentableClick = () => {
             v-if="showActionsDropdown"
             :menu-items="menuItems"
             class="mt-1 ltr:right-0 rtl:right-0 top-full"
-            @action="handleAssistantAction($event)"
+            @action="handleTopicAction($event)"
           />
         </Policy>
       </div>
@@ -161,7 +161,7 @@ const handleDocumentableClick = () => {
           class="text-sm shrink-0 truncate text-n-slate-11 inline-flex items-center gap-1"
         >
           <i class="i-woot-aiagent" />
-          {{ assistant?.name || '' }}
+          {{ topic?.name || '' }}
         </span>
         <div
           v-if="documentable"

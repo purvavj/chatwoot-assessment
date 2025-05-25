@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe AIAgent::Tools::Copilot::GetContactService do
   let(:account) { create(:account) }
   let(:user) { create(:user, account: account) }
-  let(:assistant) { create(:aiagent_assistant, account: account) }
-  let(:service) { described_class.new(assistant, user: user) }
+  let(:topic) { create(:aiagent_topic, account: account) }
+  let(:service) { described_class.new(topic, user: user) }
 
   describe '#name' do
     it 'returns the correct service name' do
@@ -38,7 +38,7 @@ RSpec.describe AIAgent::Tools::Copilot::GetContactService do
   describe '#active?' do
     context 'when user is an admin' do
       let(:user) { create(:user, :administrator, account: account) }
-      let(:assistant) { create(:aiagent_assistant, account: account) }
+      let(:topic) { create(:aiagent_topic, account: account) }
 
       it 'returns true' do
         expect(service.active?).to be true
@@ -47,7 +47,7 @@ RSpec.describe AIAgent::Tools::Copilot::GetContactService do
 
     context 'when user has custom role with contact_manage permission' do
       let(:user) { create(:user, account: account) }
-      let(:assistant) { create(:aiagent_assistant, account: account) }
+      let(:topic) { create(:aiagent_topic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: ['contact_manage']) }
 
       before do
@@ -62,7 +62,7 @@ RSpec.describe AIAgent::Tools::Copilot::GetContactService do
 
     context 'when user has custom role without contact_manage permission' do
       let(:user) { create(:user, account: account) }
-      let(:assistant) { create(:aiagent_assistant, account: account) }
+      let(:topic) { create(:aiagent_topic, account: account) }
       let(:custom_role) { create(:custom_role, account: account, permissions: []) }
 
       before do

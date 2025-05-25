@@ -204,9 +204,9 @@ const menuItems = computed(() => {
       label: t('SIDEBAR.AI_AGENT'),
       children: [
         {
-          name: 'Assistants',
-          label: t('SIDEBAR.AI_AGENT_ASSISTANTS'),
-          to: accountScopedRoute('aiagent_assistants_index'),
+          name: 'Topics',
+          label: t('SIDEBAR.AI_AGENT_TOPICS'),
+          to: accountScopedRoute('aiagent_topics_index'),
         },
         {
           name: 'Documents',
