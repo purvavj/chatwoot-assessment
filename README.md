@@ -1,15 +1,5 @@
 # Chatwoot – Customized Fork for Project Assessment
 
-## 🎯 Project Overview
-
-This is a customized fork of [Chatwoot](https://github.com/chatwoot/chatwoot) for a feature assessment project.
-
-* Rebranded with custom logo and color scheme
-* Renamed "Captain" → "AI Agent", "Assistant" → "Topic"
-* Added `contentAttributes` support in conversation payloads
-* Enhanced UI and developer experience
-
-
 ## 🛠 Setup Guide
 
 ### 1. Prerequisites
@@ -75,23 +65,6 @@ AccountUser.create!(account: account, user: user, role: :administrator)
 
 ---
 
-## 🔧 Features Implemented
-
-### Custom Branding
-
-* New logo and color palette
-* Renamed all UI, routes, and labels:
-
-  * Captain → AI Agent
-  * Assistant → Topic
-
-### Enhanced Conversations
-
-* `contentAttributes` now supported in payload
-* Custom fields (e.g., tags, urgency, mood) embedded and rendered in UI
-
----
-
 ## 📸 UI Screenshots
 
 > Add before/after screenshots to visualize branding changes
@@ -101,13 +74,6 @@ AccountUser.create!(account: account, user: user, role: :administrator)
 ## 🎥 Demo Video
 
 📽 [Watch the Feature Walkthrough](https://loom.com/your-link-here)
-
----
-
-## 📂 Repo Structure Changes
-
-* `Captain` and `Assistant` folders/files renamed
-* Routes updated in `routes.rb`, views, and frontend components
 
 ---
 
