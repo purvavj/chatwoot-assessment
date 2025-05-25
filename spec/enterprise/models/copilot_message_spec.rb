@@ -15,12 +15,12 @@ RSpec.describe CopilotMessage, type: :model do
   describe 'callbacks' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:captain_assistant, account: account) }
-    let(:copilot_thread) { create(:captain_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:assistant) { create(:aiagent_assistant, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
 
     describe '#ensure_account' do
       it 'sets the account from the copilot thread before validation' do
-        message = build(:captain_copilot_message, copilot_thread: copilot_thread, account: nil)
+        message = build(:aiagent_copilot_message, copilot_thread: copilot_thread, account: nil)
         message.valid?
         expect(message.account).to eq(copilot_thread.account)
       end
@@ -28,7 +28,7 @@ RSpec.describe CopilotMessage, type: :model do
 
     describe '#broadcast_message' do
       it 'dispatches COPILOT_MESSAGE_CREATED event after create' do
-        message = build(:captain_copilot_message, copilot_thread: copilot_thread)
+        message = build(:aiagent_copilot_message, copilot_thread: copilot_thread)
 
         expect(Rails.configuration.dispatcher).to receive(:dispatch)
           .with(COPILOT_MESSAGE_CREATED, anything, copilot_message: message)
@@ -41,11 +41,11 @@ RSpec.describe CopilotMessage, type: :model do
   describe '#push_event_data' do
     let(:account) { create(:account) }
     let(:user) { create(:user, account: account) }
-    let(:assistant) { create(:captain_assistant, account: account) }
-    let(:copilot_thread) { create(:captain_copilot_thread, account: account, user: user, assistant: assistant) }
+    let(:assistant) { create(:aiagent_assistant, account: account) }
+    let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user, assistant: assistant) }
     let(:message_content) { { 'content' => 'Test message' } }
     let(:copilot_message) do
-      create(:captain_copilot_message,
+      create(:aiagent_copilot_message,
              copilot_thread: copilot_thread,
              message_type: 'user',
              message: message_content)

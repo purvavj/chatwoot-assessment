@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-describe CaptainListener do
+describe AIAgentListener do
   let(:listener) { described_class.instance }
   let(:account) { create(:account) }
   let(:inbox) { create(:inbox, account: account) }
   let(:user) { create(:user, account: account) }
-  let(:assistant) { create(:captain_assistant, account: account, config: { feature_memory: true, feature_faq: true }) }
+  let(:assistant) { create(:aiagent_assistant, account: account, config: { feature_memory: true, feature_faq: true }) }
 
   describe '#conversation_resolved' do
     let(:agent) { create(:user, account: account) }
@@ -15,7 +15,7 @@ describe CaptainListener do
     let(:event) { Events::Base.new(event_name, Time.zone.now, conversation: conversation) }
 
     before do
-      create(:captain_inbox, captain_assistant: assistant, inbox: inbox)
+      create(:aiagent_inbox, aiagent_assistant: assistant, inbox: inbox)
     end
 
     context 'when feature_memory is enabled' do
@@ -26,11 +26,11 @@ describe CaptainListener do
       end
 
       it 'generates and updates notes' do
-        expect(Captain::Llm::ContactNotesService)
+        expect(AIAgent::Llm::ContactNotesService)
           .to receive(:new)
           .with(assistant, conversation)
-          .and_return(instance_double(Captain::Llm::ContactNotesService, generate_and_update_notes: nil))
-        expect(Captain::Llm::ConversationFaqService).not_to receive(:new)
+          .and_return(instance_double(AIAgent::Llm::ContactNotesService, generate_and_update_notes: nil))
+        expect(AIAgent::Llm::ConversationFaqService).not_to receive(:new)
 
         listener.conversation_resolved(event)
       end
@@ -44,11 +44,11 @@ describe CaptainListener do
       end
 
       it 'generates and deduplicates FAQs' do
-        expect(Captain::Llm::ConversationFaqService)
+        expect(AIAgent::Llm::ConversationFaqService)
           .to receive(:new)
           .with(assistant, conversation)
-          .and_return(instance_double(Captain::Llm::ConversationFaqService, generate_and_deduplicate: false))
-        expect(Captain::Llm::ContactNotesService).not_to receive(:new)
+          .and_return(instance_double(AIAgent::Llm::ConversationFaqService, generate_and_deduplicate: false))
+        expect(AIAgent::Llm::ContactNotesService).not_to receive(:new)
 
         listener.conversation_resolved(event)
       end

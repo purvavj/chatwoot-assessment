@@ -103,7 +103,7 @@ export const OPEN_AI_EVENTS = Object.freeze({
 export const COPILOT_EVENTS = Object.freeze({
   SEND_SUGGESTED: 'Copilot: Send suggested message',
   SEND_MESSAGE: 'Copilot: Sent a message',
-  USE_CAPTAIN_RESPONSE: 'Copilot: Used captain response',
+  USE_AI_AGENT_RESPONSE: 'Copilot: Used ai agent response',
 });
 
 export const GENERAL_EVENTS = Object.freeze({

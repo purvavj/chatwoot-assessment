@@ -280,10 +280,10 @@
     "REPORTS": "Rapporter",
     "SETTINGS": "Indstillinger",
     "CONTACTS": "Kontakter",
-    "CAPTAIN": "Captain",
-    "CAPTAIN_ASSISTANTS": "Assistants",
-    "CAPTAIN_DOCUMENTS": "Documents",
-    "CAPTAIN_RESPONSES": "FAQs",
+    "AI_AGENT": "AI Agent",
+    "AI_AGENT_ASSISTANTS": "Assistants",
+    "AI_AGENT_DOCUMENTS": "Documents",
+    "AI_AGENT_RESPONSES": "FAQs",
     "HOME": "Hjem",
     "AGENTS": "Agenter",
     "AGENT_BOTS": "Bots",
@@ -358,13 +358,13 @@
       "DESCRIPTION": "Se dine tidligere fakturaer, rediger dine fakturaoplysninger eller annuller dit abonnement.",
       "BUTTON_TXT": "Gå til faktureringsportalen"
     },
-    "CAPTAIN": {
-      "TITLE": "Captain",
-      "DESCRIPTION": "Manage usage and credits for Captain AI.",
+    "AI_AGENT": {
+      "TITLE": "AI Agent",
+      "DESCRIPTION": "Manage usage and credits for AI Agent AI.",
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Responses",
-      "UPGRADE": "Captain is not available on the free plan, upgrade now to get access to assistants, copilot and more."
+      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
     },
     "CHAT_WITH_US": {
       "TITLE": "Brug for hjælp?",
