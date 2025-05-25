@@ -281,7 +281,7 @@
     "SETTINGS": "الإعدادات",
     "CONTACTS": "جهات الاتصال",
     "AI_AGENT": "قائد",
-    "AI_AGENT_ASSISTANTS": "Assistants",
+    "AI_AGENT_TOPICS": "Topics",
     "AI_AGENT_DOCUMENTS": "Documents",
     "AI_AGENT_RESPONSES": "FAQs",
     "HOME": "الرئيسية",
@@ -364,7 +364,7 @@
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Responses",
-      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
+      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to Topics, copilot and more."
     },
     "CHAT_WITH_US": {
       "TITLE": "تحتاج مساعدة؟",
