@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AIAgent::DocumentsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Assistant) }
+  before_action -> { check_authorization(AIAgent::Assistant) }
 
   before_action :set_current_page, only: [:index]
   before_action :set_documents, except: [:create]
@@ -23,7 +23,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
 
     @document = @assistant.documents.build(document_params)
     @document.save!
-  rescue Captain::Document::LimitExceededError => e
+  rescue AIAgent::Document::LimitExceededError => e
     render_could_not_create_error(e.message)
   end
 
@@ -35,7 +35,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
   private
 
   def set_documents
-    @documents = Current.account.captain_documents.includes(:assistant).ordered
+    @documents = Current.account.aiagent_documents.includes(:assistant).ordered
   end
 
   def set_document
@@ -43,7 +43,7 @@ class Api::V1::Accounts::Captain::DocumentsController < Api::V1::Accounts::BaseC
   end
 
   def set_assistant
-    @assistant = Current.account.captain_assistants.find_by(id: document_params[:assistant_id])
+    @assistant = Current.account.aiagent_assistants.find_by(id: document_params[:assistant_id])
   end
 
   def set_current_page

@@ -20,7 +20,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::Topics', type: :request do
 
     context 'when it is an agent' do
       it 'fetches topics for the account' do
-        create_list(:captain_topic, 3, account: account)
+        create_list(:aiagent_topic, 3, account: account)
         get "/api/v1/accounts/#{account.id}/aiagent/topics",
             headers: agent.create_new_auth_token,
             as: :json
@@ -35,7 +35,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::Topics', type: :request do
   end
 
   describe 'GET /api/v1/accounts/{account.id}/aiagent/topics/{id}' do
-    let(:topic) { create(:captain_topic, account: account) }
+    let(:topic) { create(:aiagent_topic, account: account) }
 
     context 'when it is an un-authenticated user' do
       it 'does not fetch the topic' do
@@ -102,7 +102,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::Topics', type: :request do
   end
 
   describe 'PATCH /api/v1/accounts/{account.id}/aiagent/topics/{id}' do
-    let(:topic) { create(:captain_topic, account: account) }
+    let(:topic) { create(:aiagent_topic, account: account) }
     let(:update_attributes) do
       {
         topic: {
@@ -144,7 +144,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::Topics', type: :request do
   end
 
   describe 'DELETE /api/v1/accounts/{account.id}/aiagent/topics/{id}' do
-    let!(:topic) { create(:captain_topic, account: account) }
+    let!(:topic) { create(:aiagent_topic, account: account) }
 
     context 'when it is an un-authenticated user' do
       it 'does not delete the topic' do
@@ -177,7 +177,7 @@ RSpec.describe 'Api::V1::Accounts::AIAgent::Topics', type: :request do
   end
 
   describe 'POST /api/v1/accounts/{account.id}/aiagent/topics/{id}/playground' do
-    let(:topic) { create(:captain_topic, account: account) }
+    let(:topic) { create(:aiagent_topic, account: account) }
     let(:valid_params) do
       {
         message_content: 'Hello topic',

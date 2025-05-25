@@ -1,4 +1,4 @@
-module Captain::ChatHelper
+module AIAgent::ChatHelper
   def request_chat_completion
     log_chat_completion_request
 
