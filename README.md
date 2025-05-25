@@ -62,18 +62,3 @@ AccountUser.create!(account: account, user: user, role: :administrator)
 * Login at `http://localhost:3000/app/login`
 * Create inbox → Website → Complete setup
 * Widget script confirms inbox flow works
-
----
-
-## 📸 UI Screenshots
-
-> Add before/after screenshots to visualize branding changes
-
----
-
-## 🎥 Demo Video
-
-📽 [Watch the Feature Walkthrough](https://loom.com/your-link-here)
-
----
-
