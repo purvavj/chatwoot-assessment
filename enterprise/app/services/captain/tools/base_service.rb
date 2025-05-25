@@ -1,4 +1,4 @@
-class Captain::Tools::BaseService
+class AIAgent::Tools::BaseService
   attr_accessor :assistant
 
   def initialize(assistant, user: nil)

@@ -3,10 +3,10 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import MessageList from './MessageList.vue';
-import AIAgentAssistant from 'dashboard/api/aiagent/assistant';
+import AIAgentTopic from 'dashboard/api/aiagent/topic';
 
-const { assistantId } = defineProps({
-  assistantId: {
+const { topicId } = defineProps({
+  topicId: {
     type: Number,
     required: true,
   },
@@ -43,20 +43,20 @@ const sendMessage = async () => {
 
   try {
     isLoading.value = true;
-    const { data } = await AIAgentAssistant.playground({
-      assistantId,
+    const { data } = await AIAgentTopic.playground({
+      topicId,
       messageContent: currentMessage,
       messageHistory: formatMessagesForApi(),
     });
 
     messages.value.push({
       content: data.response,
-      sender: 'assistant',
+      sender: 'topic',
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error getting assistant response:', error);
+    console.error('Error getting topic response:', error);
   } finally {
     isLoading.value = false;
   }

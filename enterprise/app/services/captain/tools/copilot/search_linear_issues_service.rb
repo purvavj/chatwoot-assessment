@@ -1,4 +1,4 @@
-class Captain::Tools::Copilot::SearchLinearIssuesService < Captain::Tools::BaseService
+class AIAgent::Tools::Copilot::SearchLinearIssuesService < AIAgent::Tools::BaseService
   def name
     'search_linear_issues'
   end

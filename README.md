@@ -1,15 +1,5 @@
 # Chatwoot – Customized Fork for Project Assessment
 
-## 🎯 Project Overview
-
-This is a customized fork of [Chatwoot](https://github.com/chatwoot/chatwoot) for a feature assessment project.
-
-* Rebranded with custom logo and color scheme
-* Renamed "Captain" → "AI Agent", "Assistant" → "Topic"
-* Added `contentAttributes` support in conversation payloads
-* Enhanced UI and developer experience
-
-
 ## 🛠 Setup Guide
 
 ### 1. Prerequisites
@@ -72,5 +62,3 @@ AccountUser.create!(account: account, user: user, role: :administrator)
 * Login at `http://localhost:3000/app/login`
 * Create inbox → Website → Complete setup
 * Widget script confirms inbox flow works
-
----
