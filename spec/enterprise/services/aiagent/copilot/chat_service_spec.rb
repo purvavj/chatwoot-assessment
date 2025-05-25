@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe Captain::Copilot::ChatService do
+RSpec.describe AIAgent::Copilot::ChatService do
   let(:account) { create(:account, custom_attributes: { plan_name: 'startups' }) }
   let(:user) { create(:user, account: account) }
   let(:inbox) { create(:inbox, account: account) }
-  let(:assistant) { create(:captain_assistant, account: account) }
+  let(:assistant) { create(:aiagent_assistant, account: account) }
   let(:contact) { create(:contact, account: account) }
   let(:conversation) { create(:conversation, account: account, inbox: inbox, contact: contact) }
   let(:mock_openai_client) { instance_double(OpenAI::Client) }
-  let(:copilot_thread) { create(:captain_copilot_thread, account: account, user: user) }
+  let(:copilot_thread) { create(:aiagent_copilot_thread, account: account, user: user) }
   let!(:copilot_message) do
     create(
-      :captain_copilot_message, account: account, copilot_thread: copilot_thread
+      :aiagent_copilot_message, account: account, copilot_thread: copilot_thread
     )
   end
   let(:previous_history) { [{ role: copilot_message.message_type, content: copilot_message.message['content'] }] }
@@ -21,7 +21,7 @@ RSpec.describe Captain::Copilot::ChatService do
   end
 
   before do
-    create(:installation_config, name: 'CAPTAIN_OPEN_AI_API_KEY', value: 'test-key')
+    create(:installation_config, name: 'AI_AGENT_OPEN_AI_API_KEY', value: 'test-key')
     allow(OpenAI::Client).to receive(:new).and_return(mock_openai_client)
     allow(mock_openai_client).to receive(:chat).and_return({
       choices: [{ message: { content: '{ "content": "Hey" }' } }]

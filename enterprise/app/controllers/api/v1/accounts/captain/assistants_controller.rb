@@ -1,6 +1,6 @@
-class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::AIAgent::AssistantsController < Api::V1::Accounts::BaseController
   before_action :current_account
-  before_action -> { check_authorization(Captain::Assistant) }
+  before_action -> { check_authorization(AIAgent::Assistant) }
 
   before_action :set_assistant, only: [:show, :update, :destroy, :playground]
 
@@ -24,7 +24,7 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
   end
 
   def playground
-    response = Captain::Llm::AssistantChatService.new(assistant: @assistant).generate_response(
+    response = AIAgent::Llm::AssistantChatService.new(assistant: @assistant).generate_response(
       params[:message_content],
       message_history
     )
@@ -39,7 +39,7 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
   end
 
   def account_assistants
-    @account_assistants ||= Captain::Assistant.for_account(Current.account.id)
+    @account_assistants ||= AIAgent::Assistant.for_account(Current.account.id)
   end
 
   def assistant_params

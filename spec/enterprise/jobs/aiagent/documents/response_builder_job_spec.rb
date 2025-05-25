@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Captain::Documents::ResponseBuilderJob, type: :job do
-  let(:assistant) { create(:captain_assistant) }
-  let(:document) { create(:captain_document, assistant: assistant) }
-  let(:faq_generator) { instance_double(Captain::Llm::FaqGeneratorService) }
+RSpec.describe AIAgent::Documents::ResponseBuilderJob, type: :job do
+  let(:assistant) { create(:aiagent_assistant) }
+  let(:document) { create(:aiagent_document, assistant: assistant) }
+  let(:faq_generator) { instance_double(AIAgent::Llm::FaqGeneratorService) }
   let(:faqs) do
     [
       { 'question' => 'What is Ruby?', 'answer' => 'A programming language' },
@@ -12,7 +12,7 @@ RSpec.describe Captain::Documents::ResponseBuilderJob, type: :job do
   end
 
   before do
-    allow(Captain::Llm::FaqGeneratorService).to receive(:new)
+    allow(AIAgent::Llm::FaqGeneratorService).to receive(:new)
       .with(document.content)
       .and_return(faq_generator)
     allow(faq_generator).to receive(:generate).and_return(faqs)
@@ -21,7 +21,7 @@ RSpec.describe Captain::Documents::ResponseBuilderJob, type: :job do
   describe '#perform' do
     context 'when processing a document' do
       it 'deletes previous responses' do
-        existing_response = create(:captain_assistant_response, documentable: document)
+        existing_response = create(:aiagent_assistant_response, documentable: document)
 
         described_class.new.perform(document)
 
@@ -31,7 +31,7 @@ RSpec.describe Captain::Documents::ResponseBuilderJob, type: :job do
       it 'creates new responses for each FAQ' do
         expect do
           described_class.new.perform(document)
-        end.to change(Captain::AssistantResponse, :count).by(2)
+        end.to change(AIAgent::AssistantResponse, :count).by(2)
 
         responses = document.responses.reload
         expect(responses.count).to eq(2)
