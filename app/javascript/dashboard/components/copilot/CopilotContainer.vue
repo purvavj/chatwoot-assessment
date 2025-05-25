@@ -19,39 +19,39 @@ const props = defineProps({
 
 const store = useStore();
 const currentUser = useMapGetter('getCurrentUser');
-const assistants = useMapGetter('captainAssistants/getRecords');
-const inboxAssistant = useMapGetter('getCopilotAssistant');
+const topics = useMapGetter('aiagentTopics/getRecords');
+const inboxTopic = useMapGetter('getCopilotTopic');
 const { uiSettings, updateUISettings } = useUISettings();
 
 const messages = ref([]);
-const isCaptainTyping = ref(false);
-const selectedAssistantId = ref(null);
+const isAIAgentTyping = ref(false);
+const selectedTopicId = ref(null);
 
-const activeAssistant = computed(() => {
-  const preferredId = uiSettings.value.preferred_captain_assistant_id;
+const activeTopic = computed(() => {
+  const preferredId = uiSettings.value.preferred_aiagent_topic_id;
 
-  // If the user has selected a specific assistant, it takes first preference for Copilot.
+  // If the user has selected a specific topic, it takes first preference for Copilot.
   if (preferredId) {
-    const preferredAssistant = assistants.value.find(a => a.id === preferredId);
-    // Return the preferred assistant if found, otherwise continue to next cases
-    if (preferredAssistant) return preferredAssistant;
+    const preferredTopic = topics.value.find(a => a.id === preferredId);
+    // Return the preferred topic if found, otherwise continue to next cases
+    if (preferredTopic) return preferredTopic;
   }
 
-  // If the above is not available, the assistant connected to the inbox takes preference.
-  if (inboxAssistant.value) {
-    const inboxMatchedAssistant = assistants.value.find(
-      a => a.id === inboxAssistant.value.id
+  // If the above is not available, the topic connected to the inbox takes preference.
+  if (inboxTopic.value) {
+    const inboxMatchedTopic = topics.value.find(
+      a => a.id === inboxTopic.value.id
     );
-    if (inboxMatchedAssistant) return inboxMatchedAssistant;
+    if (inboxMatchedTopic) return inboxMatchedTopic;
   }
-  // If neither of the above is available, the first assistant in the account takes preference.
-  return assistants.value[0];
+  // If neither of the above is available, the first topic in the account takes preference.
+  return topics.value[0];
 });
 
-const setAssistant = async assistant => {
-  selectedAssistantId.value = assistant.id;
+const setTopic = async topic => {
+  selectedTopicId.value = topic.id;
   await updateUISettings({
-    preferred_captain_assistant_id: assistant.id,
+    preferred_aiagent_topic_id: topic.id,
   });
 };
 
@@ -66,7 +66,7 @@ const sendMessage = async message => {
     role: 'user',
     content: message,
   });
-  isCaptainTyping.value = true;
+  isAIAgentTyping.value = true;
 
   try {
     const { data } = await ConversationAPI.requestCopilot(
@@ -79,30 +79,30 @@ const sendMessage = async message => {
           }))
           .slice(0, -1),
         message,
-        assistant_id: selectedAssistantId.value,
+        topic_id: selectedTopicId.value,
       }
     );
     messages.value.push({
       id: new Date().getTime(),
-      role: 'assistant',
+      role: 'topic',
       content: data.message,
     });
   } catch (error) {
     // eslint-disable-next-line
     console.log(error);
   } finally {
-    isCaptainTyping.value = false;
+    isAIAgentTyping.value = false;
   }
 };
 
 onMounted(() => {
-  store.dispatch('captainAssistants/get');
+  store.dispatch('aiagentTopics/get');
 });
 
 watchEffect(() => {
   if (props.conversationId) {
-    store.dispatch('getInboxCaptainAssistantById', props.conversationId);
-    selectedAssistantId.value = activeAssistant.value?.id;
+    store.dispatch('getInboxAIAgentTopicById', props.conversationId);
+    selectedTopicId.value = activeTopic.value?.id;
   }
 });
 </script>
@@ -111,11 +111,11 @@ watchEffect(() => {
   <Copilot
     :messages="messages"
     :support-agent="currentUser"
-    :is-captain-typing="isCaptainTyping"
+    :is-ai-agent-typing="isAIAgentTyping"
     :conversation-inbox-type="conversationInboxType"
-    :assistants="assistants"
-    :active-assistant="activeAssistant"
-    @set-assistant="setAssistant"
+    :topics="topics"
+    :active-topic="activeTopic"
+    @set-topic="setTopic"
     @send-message="sendMessage"
     @reset="handleReset"
   />

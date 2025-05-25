@@ -47,7 +47,10 @@ const isFeatureEnabledonAccount = useMapGetter(
 );
 
 const showCopilotTab = computed(() =>
-  isFeatureEnabledonAccount.value(currentAccountId.value, FEATURE_FLAGS.CAPTAIN)
+  isFeatureEnabledonAccount.value(
+    currentAccountId.value,
+    FEATURE_FLAGS.AI_AGENT
+  )
 );
 </script>
 

@@ -20,7 +20,7 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  isCaptainTyping: {
+  isAIAgentTyping: {
     type: Boolean,
     default: false,
   },
@@ -69,21 +69,21 @@ const scrollToBottom = async () => {
 
 const promptOptions = [
   {
-    label: 'CAPTAIN.COPILOT.PROMPTS.SUMMARIZE.LABEL',
-    prompt: 'CAPTAIN.COPILOT.PROMPTS.SUMMARIZE.CONTENT',
+    label: 'AI_AGENT.COPILOT.PROMPTS.SUMMARIZE.LABEL',
+    prompt: 'AI_AGENT.COPILOT.PROMPTS.SUMMARIZE.CONTENT',
   },
   {
-    label: 'CAPTAIN.COPILOT.PROMPTS.SUGGEST.LABEL',
-    prompt: 'CAPTAIN.COPILOT.PROMPTS.SUGGEST.CONTENT',
+    label: 'AI_AGENT.COPILOT.PROMPTS.SUGGEST.LABEL',
+    prompt: 'AI_AGENT.COPILOT.PROMPTS.SUGGEST.CONTENT',
   },
   {
-    label: 'CAPTAIN.COPILOT.PROMPTS.RATE.LABEL',
-    prompt: 'CAPTAIN.COPILOT.PROMPTS.RATE.CONTENT',
+    label: 'AI_AGENT.COPILOT.PROMPTS.RATE.LABEL',
+    prompt: 'AI_AGENT.COPILOT.PROMPTS.RATE.CONTENT',
   },
 ];
 
 watch(
-  [() => props.messages, () => props.isCaptainTyping],
+  [() => props.messages, () => props.isAIAgentTyping],
   () => {
     scrollToBottom();
   },
@@ -107,7 +107,7 @@ watch(
         />
       </template>
 
-      <CopilotLoader v-if="isCaptainTyping" />
+      <CopilotLoader v-if="isAIAgentTyping" />
     </div>
 
     <div
@@ -145,7 +145,7 @@ watch(
           @click="handleReset"
         >
           <i class="i-lucide-refresh-ccw" />
-          <span>{{ $t('CAPTAIN.COPILOT.RESET') }}</span>
+          <span>{{ $t('AI_AGENT.COPILOT.RESET') }}</span>
         </button>
       </div>
       <CopilotInput class="mb-1 w-full" @send="sendMessage" />

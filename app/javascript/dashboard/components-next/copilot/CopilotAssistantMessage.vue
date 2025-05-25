@@ -40,15 +40,15 @@ const useCopilotResponse = () => {
   } else {
     emitter.emit(BUS_EVENTS.INSERT_INTO_NORMAL_EDITOR, props.message?.content);
   }
-  useTrack(COPILOT_EVENTS.USE_CAPTAIN_RESPONSE);
+  useTrack(COPILOT_EVENTS.USE_AI_AGENT_RESPONSE);
 };
 </script>
 
 <template>
   <div class="flex flex-col gap-1 text-n-slate-12">
-    <div class="font-medium">{{ $t('CAPTAIN.NAME') }}</div>
+    <div class="font-medium">{{ $t('AI_AGENT.NAME') }}</div>
     <span v-if="hasEmptyMessageContent" class="text-n-ruby-11">
-      {{ $t('CAPTAIN.COPILOT.EMPTY_MESSAGE') }}
+      {{ $t('AI_AGENT.COPILOT.EMPTY_MESSAGE') }}
     </span>
     <div
       v-else
@@ -58,7 +58,7 @@ const useCopilotResponse = () => {
     <div class="flex flex-row mt-1">
       <Button
         v-if="!hasEmptyMessageContent"
-        :label="$t('CAPTAIN.COPILOT.USE')"
+        :label="$t('AI_AGENT.COPILOT.USE')"
         faded
         sm
         slate
