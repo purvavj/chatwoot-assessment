@@ -74,8 +74,8 @@ onMounted(() => store.dispatch('aiagentTopics/get'));
 
 <template>
   <PageLayout
-    :header-title="$t('AI_AGENT.TopicS.HEADER')"
-    :button-label="$t('AI_AGENT.TopicS.ADD_NEW')"
+    :header-title="$t('AI_AGENT.TOPICS.HEADER')"
+    :button-label="$t('AI_AGENT.TOPICS.ADD_NEW')"
     :button-policy="['administrator']"
     :show-pagination-footer="false"
     :is-fetching="isFetching"
@@ -86,8 +86,8 @@ onMounted(() => store.dispatch('aiagentTopics/get'));
     <template #knowMore>
       <FeatureSpotlightPopover
         :button-label="$t('AI_AGENT.HEADER_KNOW_MORE')"
-        :title="$t('AI_AGENT.TopicS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
-        :note="$t('AI_AGENT.TopicS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
+        :title="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.TITLE')"
+        :note="$t('AI_AGENT.TOPICS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
         fallback-thumbnail="/assets/images/dashboard/aiagent/topic-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/aiagent/topic-popover-dark.svg"
         learn-more-url="https://chwt.app/aiagent-topic"
