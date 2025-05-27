@@ -1008,7 +1008,17 @@ export default {
         private: this.isPrivate,
         sender: this.sender,
       };
+
       messagePayload = this.setReplyToInPayload(messagePayload);
+
+      messagePayload.contentAttributes = {
+        sentiment: message.toLowerCase().includes('thank')
+          ? 'positive'
+          : 'neutral',
+        topicTags: ['sample-tag'],
+        timestamp: new Date().toISOString(),
+        isMarkdown: this.showRichContentEditor,
+      };
 
       if (this.attachedFiles && this.attachedFiles.length) {
         messagePayload.files = [];

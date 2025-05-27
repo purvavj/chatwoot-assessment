@@ -7,13 +7,13 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  account_id   :bigint           not null
-#  topic_id :integer
+#  assistant_id :integer
 #  user_id      :bigint           not null
 #
 # Indexes
 #
 #  index_copilot_threads_on_account_id    (account_id)
-#  index_copilot_threads_on_topic_id  (topic_id)
+#  index_copilot_threads_on_assistant_id  (assistant_id)
 #  index_copilot_threads_on_user_id       (user_id)
 #
 class CopilotThread < ApplicationRecord

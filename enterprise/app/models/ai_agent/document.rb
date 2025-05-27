@@ -10,14 +10,14 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  account_id    :bigint           not null
-#  topic_id  :bigint           not null
+#  topic_id      :bigint           not null
 #
 # Indexes
 #
-#  index_aiagent_documents_on_account_id                      (account_id)
+#  index_aiagent_documents_on_account_id                  (account_id)
+#  index_aiagent_documents_on_status                      (status)
 #  index_aiagent_documents_on_topic_id                    (topic_id)
 #  index_aiagent_documents_on_topic_id_and_external_link  (topic_id,external_link) UNIQUE
-#  index_aiagent_documents_on_status                          (status)
 #
 class AIAgent::Document < ApplicationRecord
   class LimitExceededError < StandardError; end

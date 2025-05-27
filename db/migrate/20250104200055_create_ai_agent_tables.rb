@@ -1,18 +1,18 @@
-class CreateCaptainTables < ActiveRecord::Migration[7.0]
+class CreateAIAgentTables < ActiveRecord::Migration[7.0]
   def up
     # Post this migration, the 'vector' extension is mandatory to run the application.
     # If the extension is not installed, the migration will raise an error.
     setup_vector_extension
-    create_assistants
+    create_topics
     create_documents
-    create_assistant_responses
+    create_topic_responses
     create_old_tables
   end
 
   def down
-    drop_table :aiagent_assistant_responses if table_exists?(:aiagent_assistant_responses)
+    drop_table :aiagent_topic_responses if table_exists?(:aiagent_topic_responses)
     drop_table :aiagent_documents if table_exists?(:aiagent_documents)
-    drop_table :aiagent_assistants if table_exists?(:aiagent_assistants)
+    drop_table :aiagent_topics if table_exists?(:aiagent_topics)
     drop_table :article_embeddings if table_exists?(:article_embeddings)
 
     # We are not disabling the extension here because it might be
@@ -31,8 +31,8 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
     end
   end
 
-  def create_assistants
-    create_table :aiagent_assistants do |t|
+  def create_topics
+    create_table :aiagent_topics do |t|
       t.string :name, null: false
       t.bigint :account_id, null: false
       t.string :description
@@ -40,8 +40,8 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :aiagent_assistants, :account_id
-    add_index :aiagent_assistants, [:account_id, :name], unique: true
+    add_index :aiagent_topics, :account_id
+    add_index :aiagent_topics, [:account_id, :name], unique: true
   end
 
   def create_documents
@@ -49,33 +49,33 @@ class CreateCaptainTables < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.string :external_link, null: false
       t.text :content
-      t.bigint :assistant_id, null: false
+      t.bigint :topic_id, null: false
       t.bigint :account_id, null: false
 
       t.timestamps
     end
 
     add_index :aiagent_documents, :account_id
-    add_index :aiagent_documents, :assistant_id
-    add_index :aiagent_documents, [:assistant_id, :external_link], unique: true
+    add_index :aiagent_documents, :topic_id
+    add_index :aiagent_documents, [:topic_id, :external_link], unique: true
   end
 
-  def create_assistant_responses
-    create_table :aiagent_assistant_responses do |t|
+  def create_topic_responses
+    create_table :aiagent_topic_responses do |t|
       t.string :question, null: false
       t.text :answer, null: false
       t.vector :embedding, limit: 1536
-      t.bigint :assistant_id, null: false
+      t.bigint :topic_id, null: false
       t.bigint :document_id
       t.bigint :account_id, null: false
 
       t.timestamps
     end
 
-    add_index :aiagent_assistant_responses, :account_id
-    add_index :aiagent_assistant_responses, :assistant_id
-    add_index :aiagent_assistant_responses, :document_id
-    add_index :aiagent_assistant_responses, :embedding, using: :ivfflat, name: 'vector_idx_knowledge_entries_embedding', opclass: :vector_l2_ops
+    add_index :aiagent_topic_responses, :account_id
+    add_index :aiagent_topic_responses, :topic_id
+    add_index :aiagent_topic_responses, :document_id
+    add_index :aiagent_topic_responses, :embedding, using: :ivfflat, name: 'vector_idx_knowledge_entries_embedding', opclass: :vector_l2_ops
   end
 
   def create_old_tables
