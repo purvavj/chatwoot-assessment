@@ -1,4 +1,4 @@
-class AiAgentListener < BaseListener
+class AIAgentListener < BaseListener
   include ::Events::Types
 
   def conversation_resolved(event)
