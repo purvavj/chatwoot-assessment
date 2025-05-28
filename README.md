@@ -62,3 +62,28 @@ AccountUser.create!(account: account, user: user, role: :administrator)
 * Login at `http://localhost:3000/app/login`
 * Create inbox → Website → Complete setup
 * Widget script confirms inbox flow works
+
+---
+
+## UI
+
+### 1. Empty inbox
+<img src="https://github.com/user-attachments/assets/0b5b06be-629f-4a84-80af-b440bcd50e70" alt="Empty conversations state" width="800"/>
+
+### 2. Widget message metadata
+<img src="https://github.com/user-attachments/assets/3358d56e-e3af-4aa2-8efd-4b4071483895" alt="Message widget showing sentiment badges" width="800"/>
+
+### 3. Integrations page
+
+Light mode:  
+<img src="https://github.com/user-attachments/assets/82d8c837-60ec-4199-9daa-6fb408e028be" alt="Integrations page - light theme" width="800"/>
+
+Dark mode:  
+<img src="https://github.com/user-attachments/assets/11586987-a502-48a1-a8c0-4df811f40f83" alt="Integrations page - dark theme" width="800"/>
+
+
+### 4. Documents empty state (AI Agent Document Page)
+<img src="https://github.com/user-attachments/assets/94d2b17e-3432-4211-bebd-4fd843ced67e" alt="No documents available" width="800"/>
+
+---
+
