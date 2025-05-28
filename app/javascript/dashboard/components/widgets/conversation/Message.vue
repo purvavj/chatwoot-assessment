@@ -473,7 +473,9 @@ export default {
           @click="retrySendMessage"
         />
       </div>
+
       <div :class="bubbleClass" @contextmenu="openContextMenu($event)">
+        <!-- existing header / story / reply-to / text bubbles -->
         <BubbleMailHead
           :email-attributes="contentAttributes.email"
           :cc="emailHeadAttributes.cc"
@@ -509,6 +511,24 @@ export default {
           :content-attributes="contentAttributes"
           :inbox-id="data.inbox_id"
         />
+
+        <!-- ←— INSERTED SENTIMENT BADGE HERE —→ -->
+        <div
+          v-if="contentAttributes.sentiment"
+          class="mt-1 text-xs inline-flex items-center gap-1 text-n-slate-11"
+        >
+          <span
+            class="inline-flex items-center px-2 py-0.5 rounded bg-n-violet-2"
+          >
+            {{
+              contentAttributes.sentiment === 'positive'
+                ? '🙂 Positive'
+                : '😐 Neutral'
+            }}
+          </span>
+        </div>
+        <!-- ——————————————————————————————————————— -->
+
         <span
           v-if="isPending && hasAttachments"
           class="chat-bubble has-attachment agent"
@@ -541,6 +561,7 @@ export default {
             <BubbleFile v-else :url="attachment.data_url" />
           </div>
         </div>
+
         <BubbleActions
           :id="data.id"
           :sender="data.sender"
@@ -558,7 +579,9 @@ export default {
           :created-at="createdAt"
         />
       </div>
+
       <Spinner v-if="isPending" size="tiny" />
+
       <div
         v-if="showAvatar"
         v-tooltip.left="tooltipForSender"
@@ -580,6 +603,7 @@ export default {
         </a>
       </div>
     </div>
+
     <div v-if="shouldShowContextMenu" class="context-menu-wrap">
       <ContextMenu
         v-if="isBubble && !isMessageDeleted"
