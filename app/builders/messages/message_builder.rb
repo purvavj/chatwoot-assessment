@@ -146,6 +146,7 @@ class Messages::MessageBuilder
       content: @params[:content],
       private: @private,
       sender: sender,
+      content_attributes: content_attributes,
       content_type: @params[:content_type],
       items: @items,
       in_reply_to: @in_reply_to,

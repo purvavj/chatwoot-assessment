@@ -224,7 +224,21 @@ class Message < ApplicationRecord
     save!
   end
 
+  before_create :annotate_content_attributes!
+  after_create_commit :annotate_content_attributes!
+
   private
+
+  def annotate_content_attributes!
+    sentiment = content.to_s.downcase.include?('thank') ? 'positive' : 'neutral'
+    tags      = ['sample-tag']
+    ts        = Time.current.utc.iso8601
+
+    self.content_attributes ||= {}
+    self.content_attributes['sentiment']  = sentiment
+    self.content_attributes['topicTags']  = tags
+    self.content_attributes['timestamp']  = ts
+  end
 
   def prevent_message_flooding
     # Added this to cover the validation specs in messages
